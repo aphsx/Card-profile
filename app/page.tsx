@@ -1,28 +1,58 @@
+import { Icon } from "@iconify/react";
 
 export default function Home() {
   return (
     <div className="w-screen h-screen flex justify-center items-center bg-gray-200">
       <div className="bg-white rounded-lg shadow-md max-w-3xl w-full p-6">
-        <div className="relative flex items-start gap-4">
-          <div className="absolute -top-16 left-6">
-            <div className="w-48 h-48 rounded-full border-4 border-white overflow-hidden">
+        <div className="relative flex items-start gap-12">
+          {/* ฝั่งซ้าย */}
+          <div className="flex-1 flex-col items-center relative">
+            {/* รูปภาพ */}
+            <div className="absolute -top-16 left-1 w-48 h-48 rounded-full border-4 border-white overflow-hidden">
               <img
                 src="https://cosi.bu.ac.th/_next/image?url=%2Fapi%2Ffiles%2F1d0358fc33a8cf2528c2be755e2be5.jpg&w=640&q=75"
                 alt="Profile"
-                className="object-cover w-full h-full"
+                className="object-cover w-full h-full bg-gray"
+                style={{ objectPosition: "50% 20%" }}
               />
             </div>
-          </div>
-          <div>
-            <span className="block text-lg font-semibold">36</span>
-            <span className="text-sm text-gray-600">Followers</span>
-          </div>
-          <div>
-            <span className="block text-lg font-semibold">64</span>
-            <span className="text-sm text-gray-600">Following</span>
+
+            {/* Followers และ Following */}
+            <div className="flex gap-4 text-center mt-36 ml-6">
+              <a
+                href="https://github.com/Kataruna"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icon icon="ri:github-fill" className="text-[1.5rem]" />
+              </a>
+
+              <a
+                href="https://github.com/Kataruna"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icon icon="ri:github-fill" className="text-[1.5rem]" />
+              </a>
+              <a
+                href="https://github.com/Kataruna"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icon icon="ri:github-fill" className="text-[1.5rem]" />
+              </a>
+              <a
+                href="https://github.com/Kataruna"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icon icon="ri:github-fill" className="text-[1.5rem]" />
+              </a>
+            </div>
           </div>
 
-          <div className="ml-60">
+          {/* ฝั่งขวา */}
+          <div className=" ml-4">
             <h2 className="text-2xl font-bold">Aphisit Danchaodang</h2>
             <p className="text-sm text-gray-600">
               Full Stack Web Developer | Programmer
@@ -35,27 +65,6 @@ export default function Home() {
               Problem solving | CSS | Javascript | Passionate about creating
               innovative solutions to complex problems
             </p>
-          </div>
-        </div>
-
-        <div className="flex justify-center gap-8 mt-8 text-center">
-          
-          <div className="flex gap-4 mt-2">
-            <a href="#" className="text-gray-600 hover:text-gray-800">
-              <i className="fab fa-linkedin"></i>
-            </a>
-            <a
-              href="https://github.com/aphsx"
-              className="text-gray-600 hover:text-gray-800"
-            >
-              <i className="fab fa-github"></i>
-            </a>
-            <a href="#" className="text-gray-600 hover:text-gray-800">
-              <i className="fab fa-twitter"></i>
-            </a>
-            <a href="#" className="text-gray-600 hover:text-gray-800">
-              <i className="fas fa-globe"></i>
-            </a>
           </div>
         </div>
 
