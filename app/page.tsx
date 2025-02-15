@@ -20,6 +20,13 @@ export default function Home() {
             {/* Followers และ Following */}
             <div className="flex gap-4 text-center mt-36 ml-6">
               <a
+                href="https://www.instagram.com/_aphsx"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <Icon icon="ri:instagram-fill" className="text-[1.5rem]" />
+              </a>
+              <a
                 href="https://github.com/aphsx"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -28,25 +35,18 @@ export default function Home() {
               </a>
 
               <a
-                href="#"
+                href="https://www.youtube.com/@WSench"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Icon icon="ri:github-fill" className="text-[1.5rem]" />
+                <Icon icon="ri:youtube-fill" className="text-[1.5rem]" />
               </a>
               <a
-                href="#"
+                href="https://yourprofile.com"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Icon icon="ri:github-fill" className="text-[1.5rem]" />
-              </a>
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Icon icon="ri:github-fill" className="text-[1.5rem]" />
+                <Icon icon="ri:user-fill" className="text-[1.5rem]" />
               </a>
             </div>
           </div>
@@ -54,12 +54,19 @@ export default function Home() {
           {/* ฝั่งขวา */}
           <div className=" ml-4">
             <h2 className="text-2xl font-bold">Aphisit Danchaodang</h2>
+
             <p className="text-sm text-gray-600">
               Full Stack Web Developer | Programmer
             </p>
-            <button className="mt-2 bg-blue-500 text-white px-4 py-1 rounded-lg">
-              Follow
-            </button>
+            <a
+              href="https://www.instagram.com/_aphsx"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <button className="mt-2 bg-gray-900 text-white px-4 py-1 rounded-lg">
+                Follow
+              </button>
+            </a>
             <p className="mt-4 text-gray-600 text-sm">
               Web developer | Open source | Full Stack | React js | Next js |
               Problem solving | CSS | Javascript | Passionate about creating
