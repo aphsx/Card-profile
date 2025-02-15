@@ -39,11 +39,7 @@ export default function Home() {
               >
                 <Icon icon="ri:youtube-fill" className="text-[1.5rem]" />
               </a>
-              <a
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href="#" target="_blank" rel="noopener noreferrer">
                 <Icon icon="ri:user-fill" className="text-[1.5rem]" />
               </a>
             </div>
@@ -67,9 +63,9 @@ export default function Home() {
               </button>
             </a>
             <p className="mt-4 text-gray-600 text-sm">
-              Web developer | Open source | Full Stack | React js | Next js |
-              Problem solving | CSS | Javascript | Passionate about creating
-              innovative solutions
+              i'm student Computer Science at Bangkok University, working as a
+              Full Stack Web Developer and Programmer at Center of Specialty
+              Innovation (CoSI), formerly known as the Bangkok University.
             </p>
           </div>
         </div>
