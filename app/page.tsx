@@ -20,7 +20,7 @@ export default function Home() {
             {/* Followers และ Following */}
             <div className="flex gap-4 text-center mt-36 ml-6">
               <a
-                href="https://github.com/Kataruna"
+                href="https://github.com/aphsx"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -28,21 +28,21 @@ export default function Home() {
               </a>
 
               <a
-                href="https://github.com/Kataruna"
+                href="#"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <Icon icon="ri:github-fill" className="text-[1.5rem]" />
               </a>
               <a
-                href="https://github.com/Kataruna"
+                href="#"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <Icon icon="ri:github-fill" className="text-[1.5rem]" />
               </a>
               <a
-                href="https://github.com/Kataruna"
+                href="#"
                 target="_blank"
                 rel="noopener noreferrer"
               >
