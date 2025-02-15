@@ -2,23 +2,22 @@ import { Icon } from "@iconify/react";
 
 export default function Home() {
   return (
-    <div className="w-screen h-screen flex justify-center items-center bg-gray-200">
-      <div className="bg-white rounded-lg shadow-md max-w-3xl w-full p-6">
-        <div className="relative flex items-start gap-12">
-          {/* ฝั่งซ้าย */}
-          <div className="flex-1 flex-col items-center relative">
-            {/* รูปภาพ */}
-            <div className="absolute -top-16 left-1 w-48 h-48 rounded-full border-4 border-white overflow-hidden">
+    <div className="w-screen min-h-screen flex flex-col items-center justify-center bg-gray-200 p-4">
+      <div className="bg-white rounded-lg shadow-md w-full max-w-3xl p-6">
+        <div className="flex flex-col md:flex-row items-start gap-6 md:gap-12">
+          {/* Left side */}
+          <div className="w-full md:w-auto flex flex-col items-center relative">
+            {/* Profile Image */}
+            <div className="w-32 h-32 md:w-48 md:h-48 rounded-full border-4 border-white overflow-hidden -mt-16 md:-mt-20">
               <img
                 src="https://cosi.bu.ac.th/_next/image?url=%2Fapi%2Ffiles%2F1d0358fc33a8cf2528c2be755e2be5.jpg&w=640&q=75"
                 alt="Profile"
-                className="object-cover w-full h-full bg-gray"
+                className="object-cover w-full h-full"
                 style={{ objectPosition: "50% 20%" }}
               />
             </div>
-
-            {/* Followers และ Following */}
-            <div className="flex gap-4 text-center mt-36 ml-6">
+            {/* Icons */}
+            <div className="flex gap-4 text-center mt-6">
               <a
                 href="https://www.instagram.com/_aphsx"
                 target="_blank"
@@ -33,7 +32,6 @@ export default function Home() {
               >
                 <Icon icon="ri:github-fill" className="text-[1.5rem]" />
               </a>
-
               <a
                 href="https://www.youtube.com/@WSench"
                 target="_blank"
@@ -51,10 +49,11 @@ export default function Home() {
             </div>
           </div>
 
-          {/* ฝั่งขวา */}
-          <div className=" ml-4">
-            <h2 className="text-2xl font-bold">Aphisit Danchaodang</h2>
-
+          {/* Right side */}
+          <div className="flex-1 mt-4 md:mt-0">
+            <h2 className="text-xl md:text-2xl font-bold">
+              Aphisit Danchaodang
+            </h2>
             <p className="text-sm text-gray-600">
               Full Stack Web Developer | Programmer
             </p>
@@ -70,17 +69,10 @@ export default function Home() {
             <p className="mt-4 text-gray-600 text-sm">
               Web developer | Open source | Full Stack | React js | Next js |
               Problem solving | CSS | Javascript | Passionate about creating
-              innovative solutions to complex problems
+              innovative solutions
             </p>
           </div>
         </div>
-
-        {/* <div className="flex mt-6 border-t pt-4">
-          <button className="flex-1 text-blue-500 border-b-2 border-blue-500 pb-2">
-            Posts
-          </button>
-          <button className="flex-1 text-gray-600 pb-2">Notices</button>
-        </div> */}
       </div>
     </div>
   );
