@@ -8,7 +8,7 @@ export default function Home() {
           {/* Left side */}
           <div className="w-full md:w-auto flex flex-col items-center relative">
             {/* Profile Image */}
-            <div className="w-32 h-32 sm: md:w-48 md:h-48 rounded-full border-4 border-white overflow-hidden -mt-16 md:-mt-20">
+            <div className="w-32 h-32 md:w-48 md:h-48 rounded-full border-4 border-white overflow-hidden -mt-16 md:-mt-20">
               <img
                 src="https://cosi.bu.ac.th/_next/image?url=%2Fapi%2Ffiles%2F1d0358fc33a8cf2528c2be755e2be5.jpg&w=640&q=75"
                 alt="Profile"
@@ -40,7 +40,7 @@ export default function Home() {
                 <Icon icon="ri:youtube-fill" className="text-[1.5rem]" />
               </a>
               <a
-                href="https://yourprofile.com"
+                href="#"
                 target="_blank"
                 rel="noopener noreferrer"
               >
