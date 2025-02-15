@@ -19,11 +19,16 @@ export default function Home() {
             {/* Icons */}
             <div className="flex gap-4 text-center mt-6">
               <a
+                className="relative group"
                 href="https://www.instagram.com/_aphsx"
                 target="_blank"
                 rel="noopener noreferrer"
+                
               >
                 <Icon icon="ri:instagram-fill" className="text-[1.5rem]" />
+                {/* <span className="absolute bottom-full mb-2 hidden group-hover:block text-xs bg-black text-white px-2 py-1 rounded">
+                  Instagram
+                </span> */}
               </a>
               <a
                 href="https://github.com/aphsx"
@@ -31,6 +36,7 @@ export default function Home() {
                 rel="noopener noreferrer"
               >
                 <Icon icon="ri:github-fill" className="text-[1.5rem]" />
+                
               </a>
               <a
                 href="https://www.youtube.com/@WSench"
