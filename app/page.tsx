@@ -43,7 +43,11 @@ export default function Home() {
               >
                 <Icon icon="ri:youtube-fill" className="text-[1.5rem]" />
               </a>
-              <a href="#" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://aphsx-portfolio.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Icon icon="ri:user-fill" className="text-[1.5rem]" />
               </a>
             </div>
@@ -67,8 +71,8 @@ export default function Home() {
               </button>
             </a>
             <p className="mt-4 text-gray-600 text-sm">
-              I am a Computer Science student at Bangkok University. | working as
-              a Full Stack Web Developer and Programmer at the Center of
+              I am a Computer Science student at Bangkok University. | working
+              as a Full Stack Web Developer and Programmer at the Center of
               Specialty Innovation (CoSI).
             </p>
           </div>
