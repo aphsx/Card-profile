@@ -23,7 +23,6 @@ export default function Home() {
                 href="https://www.instagram.com/_aphsx"
                 target="_blank"
                 rel="noopener noreferrer"
-                
               >
                 <Icon icon="ri:instagram-fill" className="text-[1.5rem]" />
                 {/* <span className="absolute bottom-full mb-2 hidden group-hover:block text-xs bg-black text-white px-2 py-1 rounded">
@@ -36,7 +35,6 @@ export default function Home() {
                 rel="noopener noreferrer"
               >
                 <Icon icon="ri:github-fill" className="text-[1.5rem]" />
-                
               </a>
               <a
                 href="https://www.youtube.com/@WSench"
@@ -69,9 +67,9 @@ export default function Home() {
               </button>
             </a>
             <p className="mt-4 text-gray-600 text-sm">
-              i'm student Computer Science at Bangkok University, working as a
-              Full Stack Web Developer and Programmer at Center of Specialty
-              Innovation (CoSI), formerly known as the Bangkok University.
+              I am a Computer Science student at Bangkok University. | working as
+              a Full Stack Web Developer and Programmer at the Center of
+              Specialty Innovation (CoSI).
             </p>
           </div>
         </div>
