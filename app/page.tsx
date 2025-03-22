@@ -18,6 +18,13 @@ export default function Home() {
             </div>
             {/* Icons */}
             <div className="flex gap-4 text-center mt-6">
+                <a
+                href="https://www.linkedin.com/in/aphisit-danchaodang-108037358/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >
+                <Icon icon="ri:linkedin-box-fill" className="text-[1.5rem]" />
+                </a>
               <a
                 className="relative group"
                 href="https://www.instagram.com/_aphsx"
@@ -62,7 +69,7 @@ export default function Home() {
               Full Stack Web Developer | Programmer
             </p>
             <a
-              href="https://www.instagram.com/_aphsx"
+              href="https://www.linkedin.com/in/aphisit-danchaodang-108037358/"
               target="_blank"
               rel="noopener noreferrer"
             >
