@@ -79,8 +79,15 @@ export default function Home() {
             </a>
             <p className="mt-4 text-gray-600 text-sm">
               I am a Computer Science student at Bangkok University. | working
-              as a Full Stack Web Developer and Programmer at the Center of
-              Specialty Innovation (CoSI).
+              as a Full Stack Web Developer and Programmer at the{" "}
+              <a
+              href="https://cosi.bu.ac.th/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 underline"
+              >
+              Center of Specialty Innovation
+              </a>.
             </p>
           </div>
         </div>
