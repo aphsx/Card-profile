@@ -12,7 +12,7 @@ export default function Home() {
               <img
               src="/CSI00138.jpg"
               alt="Profile"
-              className="object-cover w-full h-full"
+              className="object-cover w-full h-full scale-150"
               style={{ objectPosition: "50% 20%" }}
               />
             </div>
