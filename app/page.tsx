@@ -10,10 +10,10 @@ export default function Home() {
             {/* Profile Image */}
             <div className="w-32 h-32 md:w-48 md:h-48 rounded-full border-4 border-white overflow-hidden -mt-16 md:-mt-20">
               <img
-                src="https://cosi.bu.ac.th/_next/image?url=%2Fapi%2Ffiles%2F1d0358fc33a8cf2528c2be755e2be5.jpg&w=640&q=75"
-                alt="Profile"
-                className="object-cover w-full h-full"
-                style={{ objectPosition: "50% 20%" }}
+              src="/CSI00138.jpg"
+              alt="Profile"
+              className="object-cover w-full h-full"
+              style={{ objectPosition: "50% 20%" }}
               />
             </div>
             {/* Icons */}
