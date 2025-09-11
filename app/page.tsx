@@ -16,8 +16,28 @@ export default function Home() {
               style={{ objectPosition: "50% 20%" }}
               />
             </div>
+            
+          </div>
+
+          {/* Right side */}
+          <div className="flex-1 items-center">
+            <h2 className="text-xl md:text-2xl font-bold">
+              Aphisit Danchaodangs
+            </h2>
+            <p className="text-sm text-gray-600">
+              Full Stack Web Developer | Programmer
+            </p>
+            <a
+              href="https://www.linkedin.com/in/aphisit-danchaodang-108037358/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {/* <button className="mt-2 bg-gray-900 text-white px-4 py-1 rounded-lg">
+                Portfolio
+              </button> */}
+            </a>
             {/* Icons */}
-            <div className="flex gap-4 text-center mt-6">
+            <div className="flex gap-4 text-center mt-4">
                 <a
                 href="https://www.linkedin.com/in/aphisit-danchaodang-108037358/"
                 target="_blank"
@@ -36,6 +56,9 @@ export default function Home() {
                   Instagram
                 </span> */}
               </a>
+              <button className=" bg-gray-900 text-white px-4 py-1 rounded-lg">
+                Portfolio
+              </button>
               <a
                 href="https://github.com/aphsx"
                 target="_blank"
@@ -50,35 +73,17 @@ export default function Home() {
               >
                 <Icon icon="ri:youtube-fill" className="text-[1.5rem]" />
               </a>
-              <a
+              
+              {/* <a
                 href="https://aphsx-portfolio.vercel.app/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <Icon icon="ri:user-fill" className="text-[1.5rem]" />
-              </a>
+              </a> */}
             </div>
-          </div>
-
-          {/* Right side */}
-          <div className="flex-1 mt-4 md:mt-0">
-            <h2 className="text-xl md:text-2xl font-bold">
-              Aphisit Danchaodang
-            </h2>
-            <p className="text-sm text-gray-600">
-              Full Stack Web Developer | Programmer
-            </p>
-            <a
-              href="https://www.linkedin.com/in/aphisit-danchaodang-108037358/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <button className="mt-2 bg-gray-900 text-white px-4 py-1 rounded-lg">
-                Follow
-              </button>
-            </a>
-            <p className="mt-4 text-gray-600 text-sm">
-              {/* I am a Full Stack Web Developer and Programmer at the{" "}
+            {/* <p className="mt-4 text-gray-600 text-sm">
+              I am a Full Stack Web Developer and Programmer at the{" "}
               <a
               href="https://cosi.bu.ac.th/"
               target="_blank"
@@ -86,8 +91,8 @@ export default function Home() {
               className="text-blue-500 underline"
               >
               Center of Specialty Innovation
-              </a>. */}
-            </p>
+              </a>.
+            </p> */}
           </div>
         </div>
       </div>
