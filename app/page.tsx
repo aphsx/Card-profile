@@ -10,21 +10,21 @@ export default function Home() {
             {/* Profile Image */}
             <div className="w-32 h-32 md:w-48 md:h-48 rounded-full border-4 border-white overflow-hidden -mt-16 md:-mt-20">
               <img
-              src="/CSI00138.jpg"
-              alt="Profile"
-              className="object-cover w-full h-full scale-150"
-              style={{ objectPosition: "50% 20%" }}
+                src="/CSI00138.jpg"
+                alt="Profile"
+                className="object-cover w-full h-full scale-150"
+                style={{ objectPosition: "50% 20%" }}
               />
             </div>
             {/* Icons */}
             <div className="flex gap-4 text-center mt-6">
-                <a
+              <a
                 href="https://www.linkedin.com/in/aphisit-danchaodang-108037358/"
                 target="_blank"
                 rel="noopener noreferrer"
-                >
+              >
                 <Icon icon="ri:linkedin-box-fill" className="text-[1.5rem]" />
-                </a>
+              </a>
               <a
                 className="relative group"
                 href="https://www.instagram.com/_aphsx"
@@ -61,7 +61,7 @@ export default function Home() {
           </div>
 
           {/* Right side */}
-          <div className="flex-1 mt-4 md:mt-0">
+            <div className="flex-1 flex flex-col  gap-1 md:mt-0 ">
             <h2 className="text-xl md:text-2xl font-bold">
               Aphisit Danchaodang
             </h2>
@@ -69,15 +69,15 @@ export default function Home() {
               Full Stack Web Developer | Programmer
             </p>
             <a
-              href="https://www.linkedin.com/in/aphisit-danchaodang-108037358/"
+              href="https://aphsx-portfolio.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
             >
-              <button className="mt-2 bg-gray-900 text-white px-4 py-1 rounded-lg">
+              <button className=" bg-gray-900 text-white px-4 py-1 rounded-lg">
                 Follow
-              </button>
+              </button >
             </a>
-            <p className="mt-4 text-gray-600 text-sm">
+            <p className=" text-gray-600 text-sm">
               I am a Computer Science student at Bangkok University. | working
               as a Full Stack Web Developer and Programmer at the{" "}
               <a
@@ -92,6 +92,16 @@ export default function Home() {
           </div>
         </div>
       </div>
+      {/* ถ้ากดลูกศรนี้ทำอนิเมชั่นสลับหน้าให้หน่อย */}
+      <div className="mt-8 flex justify-center">
+        {/* สร้างแทบลูกศรเลื่อนลงเพื่อเลื่อนไปหน้าอื่น */}
+        <a href="https://aphsx-portfolio.vercel.app/" className="animate-bounce">
+          <Icon icon="ri:arrow-down-s-line" className="text-3xl text-gray-700" />
+          
+        </a>
+      </div>
+      
     </div>
+    
   );
 }
