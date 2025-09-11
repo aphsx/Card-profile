@@ -78,8 +78,7 @@ export default function Home() {
               </button>
             </a>
             <p className="mt-4 text-gray-600 text-sm">
-              I am a Computer Science student at Bangkok University. | working
-              as a Full Stack Web Developer and Programmer at the{" "}
+              {/* I am a Full Stack Web Developer and Programmer at the{" "}
               <a
               href="https://cosi.bu.ac.th/"
               target="_blank"
@@ -87,7 +86,7 @@ export default function Home() {
               className="text-blue-500 underline"
               >
               Center of Specialty Innovation
-              </a>.
+              </a>. */}
             </p>
           </div>
         </div>
