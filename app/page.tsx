@@ -4,17 +4,18 @@ import React from "react";
 import { Icon } from "@iconify/react";
 import { useLanguage } from "@/hooks/use-language";
 import { LanguageToggle } from "@/components/language-toggle";
+import Link from "next/link";
 
 export default function Home() {
   const { t } = useLanguage();
 
   return (
-    <div className="w-screen min-h-screen flex flex-col items-center justify-center bg-gray-200 p-4">
+    <div className="w-screen min-h-screen flex flex-col items-center justify-center bg-gray-200 p-4 relative">
       <div className="fixed top-4 right-4 z-10">
         <LanguageToggle />
       </div>
 
-      <div className="bg-white rounded-lg shadow-md w-full max-w-3xl p-6">
+  <div className="bg-white rounded-lg shadow-md w-full max-w-3xl p-6">
         <div className="flex flex-col md:flex-row items-start gap-6 md:gap-12">
           {/* Left Side */}
           <div className="w-full md:w-auto flex flex-col items-center relative">
@@ -68,15 +69,11 @@ export default function Home() {
           <div className="flex-1 flex flex-col gap-1 md:mt-0">
             <h2 className="text-xl md:text-2xl font-bold">{t("name")}</h2>
             <p className="text-sm text-gray-600">{t("title")}</p>
-            <a
-              href="https://aphsx-portfolio.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <Link href="/portfolio">
               <button className="bg-gray-900 text-white px-4 py-1 rounded-lg">
                 {t("follow")}
               </button>
-            </a>
+            </Link>
             <p className="text-gray-600 text-sm">
               {t("description")}{" "}
               <a
@@ -91,6 +88,14 @@ export default function Home() {
             </p>
           </div>
         </div>
+      </div>
+      {/* Down Arrow to navigate to portfolio */}
+      <div className="absolute bottom-6 flex justify-center w-full">
+        <Link href="/portfolio" aria-label="Go to portfolio" className="animate-bounce text-gray-700 hover:text-black">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
+            <path fillRule="evenodd" d="M11.47 3.97a.75.75 0 011.06 0l6 6a.75.75 0 11-1.06 1.06L12.75 6.31v13.94a.75.75 0 01-1.5 0V6.31L6.53 11.03a.75.75 0 11-1.06-1.06l6-6z" clipRule="evenodd" transform="rotate(180 12 12)" />
+          </svg>
+        </Link>
       </div>
     </div>
   );
