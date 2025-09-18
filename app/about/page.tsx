@@ -35,14 +35,7 @@ export default function AboutPage() {
     }
   ];
 
-  const interests = [
-    { name: { en: "Photography", th: "การถ่ายภาพ" }, icon: "📸" },
-    { name: { en: "Traveling", th: "การท่องเที่ยว" }, icon: "✈️" },
-    { name: { en: "Drawing", th: "การวาดรูป" }, icon: "🎨" },
-    { name: { en: "Gaming", th: "เกม" }, icon: "🎮" },
-    { name: { en: "Music", th: "ดนตรี" }, icon: "🎵" },
-    { name: { en: "Reading", th: "การอ่าน" }, icon: "📚" }
-  ];
+  
 
   return (
     <motion.div
@@ -213,35 +206,7 @@ export default function AboutPage() {
         </div>
       </motion.section>
 
-      {/* Interests Section */}
-      <motion.section
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.9, duration: 0.5 }}
-        className="mb-12"
-      >
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-youtube-dark-text mb-6">
-          {language === "en" ? "Interests & Hobbies" : "ความสนใจและงานอดิเรก"}
-        </h2>
-        <div className="bg-white dark:bg-youtube-dark-surface rounded-xl shadow-lg dark:shadow-black/50 p-6 border dark:border-youtube-dark-surface3">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {interests.map((interest, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 1 + index * 0.1, duration: 0.3 }}
-                className="flex items-center space-x-3 p-3 rounded-lg bg-gray-50 dark:bg-youtube-dark-surface2 hover:bg-gray-100 dark:hover:bg-youtube-dark-hover transition-colors duration-200"
-              >
-                <span className="text-2xl">{interest.icon}</span>
-                <span className="text-gray-700 dark:text-youtube-dark-textSecondary font-medium">
-                  {interest.name[language]}
-                </span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </motion.section>
+      
 
       {/* Contact CTA */}
       <motion.section
