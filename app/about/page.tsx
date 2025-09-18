@@ -4,6 +4,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useLanguage } from "@/hooks/use-language";
 import Link from "next/link";
+import EducationTimeline from "@/components/EducationTimeline";
 
 export default function AboutPage() {
   const { language } = useLanguage();
@@ -131,11 +132,21 @@ export default function AboutPage() {
         </div>
       </motion.section>
 
+      {/* Education Section */}
+      <motion.section
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.55, duration: 0.5 }}
+        className="mb-12"
+      >
+        <EducationTimeline />
+      </motion.section>
+
       {/* Skills Section */}
       <motion.section
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5, duration: 0.5 }}
+        transition={{ delay: 0.6, duration: 0.5 }}
         className="mb-12"
       >
         <h2 className="text-2xl font-bold text-gray-900 dark:text-youtube-dark-text mb-6">
