@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar";
 
-export default function PortfolioLayout({ children }: { children: React.ReactNode }) {
+export default function AboutLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-youtube-dark-bg transition-colors">
       <Navbar />

@@ -44,15 +44,31 @@ export default async function RootLayout({
   // Read preferred language from cookie on the server to keep SSR and CSR in sync
   const cookieStore = await cookies();
   const langCookie = cookieStore.get("lang")?.value;
+  const themeCookie = cookieStore.get("theme")?.value;
   const initialLanguage = langCookie === "th" ? "th" : "en";
-  // Note: we can't use hooks here (server component), so we set lang dynamically on client via script
+  
+  // Determine initial theme - prefer cookie, fallback to light for SSR consistency
+  const initialTheme = themeCookie || "light";
+  
   return (
-    <html lang={initialLanguage}>
+    <html lang={initialLanguage} className={initialTheme === "dark" ? "dark" : ""}>
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html:
-              "(function(){try{var t=localStorage.getItem('theme');var d=t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme: dark)').matches);var e=document.documentElement;e.classList[d?'add':'remove']('dark');}catch(e){}})();",
+            __html: `
+              (function(){
+                try {
+                  var theme = localStorage.getItem('theme') || document.cookie.split(';').find(row => row.trim().startsWith('theme='))?.split('=')[1] || 'light';
+                  var prefersDark = !theme && window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  var isDark = theme === 'dark' || prefersDark;
+                  document.documentElement.classList.toggle('dark', isDark);
+                  // Sync cookie if using localStorage
+                  if (localStorage.getItem('theme') && localStorage.getItem('theme') !== theme) {
+                    document.cookie = 'theme=' + localStorage.getItem('theme') + '; path=/; max-age=' + (60*60*24*365);
+                  }
+                } catch(e) {}
+              })();
+            `,
           }}
         />
       </head>

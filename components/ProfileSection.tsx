@@ -33,8 +33,8 @@ export default function ProfileSection() {
 
   return (
     <section id="aboutus" className="pt-5">
-      <h2 className="text-4xl font-bold text-gray-800 mb-4">{t("name")}</h2>
-      <h5 className="text-lg text-gray-600 mb-6" style={{ minHeight: "1.7em" }}>
+      <h2 className="text-4xl font-bold text-gray-800 dark:text-youtube-dark-text mb-4">{t("name")}</h2>
+      <h5 className="text-lg text-gray-600 dark:text-youtube-dark-textSecondary mb-6" style={{ minHeight: "1.7em" }}>
         {text.slice(0, currentIndex) || " "}
       </h5>
     </section>
