@@ -24,4 +24,14 @@ body {
 html[lang="th"] body {
   font-family: var(--font-kanit), Arial, Helvetica, sans-serif;
 }
+
+/* Hide scrollbar */
+html, body {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer and Edge */
+}
+
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
+}
  
