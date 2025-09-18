@@ -7,11 +7,13 @@ import {
   FaPython,
 } from "react-icons/fa";
 import { SiNextdotjs as FaNextjs } from "react-icons/si";
+import { useLanguage } from "@/hooks/use-language";
 
 export const SkillsAndFrameworks = () => {
+  const { t } = useLanguage();
   return (
     <section className="mt-6 max-w-5xl mx-auto">
-      <h2 className="text-left font-bold text-4xl mt-10 ml-0">Skills and Frameworks</h2>
+      <h2 className="text-left font-bold text-4xl mt-10 ml-0">{t("skillsTitle")}</h2>
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-6">
         <div className="relative group flex flex-col items-center p-2 bg-white border border-zinc-800 rounded-md shadow hover:shadow-lg">
           <FaNextjs className="text-black group-hover:text-black" size={36} />

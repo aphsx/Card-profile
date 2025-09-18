@@ -8,15 +8,20 @@
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  /* Default for English/Latin: Geist */
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
 }
+
+/* When app language is Thai, prefer Kanit */
+html[lang="th"] body {
+  font-family: var(--font-kanit), Arial, Helvetica, sans-serif;
+}
+ 

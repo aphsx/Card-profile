@@ -1,22 +1,22 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { LanguageToggle } from "@/components/language-toggle";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { useLanguage } from "@/hooks/use-language";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const { t } = useLanguage();
 
   const toggleMenu = () => setIsOpen((v) => !v);
-  const toggleTheme = () => {
-    setIsDarkMode((v) => !v);
-    if (typeof document !== "undefined") {
-      document.documentElement.classList.toggle("dark");
-    }
-  };
+  useEffect(() => {
+    // no-op; retained for potential future side effects
+  }, []);
 
   return (
-    <header className="w-full dark:bg-gray-950 py-4">
-      <div className="mx-auto max-w-2xl px-4 sm:px-6 xl:px-0 flex items-center justify-between">
+    <header className="w-full dark:bg-gray-950 py-4 min-h-16">
+      <div className="mx-auto max-w-2xl px-4 sm:px-6 xl:px-0 grid grid-cols-[auto,1fr,auto] items-center">
         <Link href="/" className="break-words" aria-label="Home">
           <div className="flex items-center">
             <div className="text-lg sm:text-2xl font-bold hover:text-blue-500 dark:text-gray-100 dark:hover:text-primary-400">
@@ -38,31 +38,42 @@ const Navbar = () => {
         <nav
           className={`fixed top-0 left-0 z-50 h-full w-3/4 bg-white dark:bg-gray-900 shadow-lg transform ${
             isOpen ? "translate-x-0" : "-translate-x-full"
-          } transition-transform duration-300 ease-in-out sm:static sm:translate-x-0 sm:flex sm:items-center sm:bg-transparent sm:shadow-none sm:w-auto`}
+          } transition-transform duration-300 ease-in-out sm:static sm:translate-x-0 sm:flex sm:items-center sm:bg-transparent sm:shadow-none sm:w-auto sm:justify-self-center`}
         >
           <ul className="flex flex-col items-start space-y-6 px-6 pt-20 sm:flex-row sm:space-y-0 sm:space-x-6 sm:pt-0">
             <li>
-              <Link href="/portfolio" className="text-lg font-medium text-gray-900 hover:text-blue-500 dark:text-gray-100 dark:hover:text-primary-400">
-                Portfolio
+              <Link href="/portfolio" className="whitespace-nowrap text-lg font-medium text-gray-900 hover:text-blue-500 dark:text-gray-100 dark:hover:text-primary-400">
+                {t("navbarPortfolio")}
               </Link>
             </li>
             <li>
-              <Link href="/projects" className="text-lg font-medium text-gray-900 hover:text-blue-500 dark:text-gray-100 dark:hover:text-primary-400">
-                Projects
+              <Link href="/projects" className="whitespace-nowrap text-lg font-medium text-gray-900 hover:text-blue-500 dark:text-gray-100 dark:hover:text-primary-400">
+                {t("navbarProjects")}
               </Link>
             </li>
             <li>
-              <Link href="/about" className="text-lg font-medium text-gray-900 hover:text-blue-500 dark:text-gray-100 dark:hover:text-primary-400">
-                About
+              <Link href="/about" className="whitespace-nowrap text-lg font-medium text-gray-900 hover:text-blue-500 dark:text-gray-100 dark:hover:text-primary-400">
+                {t("navbarAbout")}
               </Link>
             </li>
             <li className="sm:hidden">
-              <button onClick={toggleTheme} aria-label="Theme switcher" type="button" className="flex items-center justify-center text-lg font-medium text-gray-900 hover:text-blue-500 dark:text-gray-100 dark:hover:text-primary-400">
-                {isDarkMode ? "Light Mode" : "Dark Mode"}
-              </button>
+              <ThemeToggle />
+            </li>
+            {/* Language toggle on mobile menu */}
+            <li className="sm:hidden">
+              <LanguageToggle />
             </li>
           </ul>
         </nav>
+        {/* Right-side utilities on larger screens */}
+        <div className="hidden sm:flex items-center gap-3 justify-self-end">
+          <div className="w-28 shrink-0 flex justify-end">
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+              <LanguageToggle />
+            </div>
+          </div>
+        </div>
       </div>
 
       {isOpen && <div onClick={toggleMenu} className="fixed inset-0 z-40 bg-black bg-opacity-50 sm:hidden"></div>}
