@@ -82,8 +82,8 @@ export default function AboutPage() {
             {language === "en" ? (
               <div className="space-y-4 text-gray-600 dark:text-youtube-dark-textSecondary">
                 <p>
-                  Hello! I'm <strong className="text-gray-900 dark:text-youtube-dark-text">Aphisit Danchaodang</strong>, 
-                  a passionate Full Stack Web Developer and Computer Science student at Bangkok University. 
+                  Hello! I&apos;m <strong className="text-gray-900 dark:text-youtube-dark-text">Aphisit Danchaodang</strong>,
+                  a passionate Full Stack Web Developer and Computer Science student at Bangkok University.
                   I have a genuine love for creating digital solutions that make a difference.
                 </p>
                 <p>
@@ -97,8 +97,8 @@ export default function AboutPage() {
                   satisfaction of solving complex problems with elegant code.
                 </p>
                 <p>
-                  Beyond coding, I'm passionate about photography, traveling, and exploring creative outlets like 
-                  drawing. I believe that diverse interests fuel creativity and bring fresh perspectives to 
+                  Beyond coding, I&apos;m passionate about photography, traveling, and exploring creative outlets like
+                  drawing. I believe that diverse interests fuel creativity and bring fresh perspectives to
                   problem-solving in tech.
                 </p>
               </div>
