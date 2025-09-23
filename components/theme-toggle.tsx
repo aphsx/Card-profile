@@ -51,10 +51,10 @@ export function ThemeToggle() {
   if (!mounted) {
     return (
       <button
-        className="inline-flex items-center justify-center w-9 h-9 rounded-md border border-gray-300 bg-white/80 dark:bg-gray-800/80 dark:border-gray-700 hover:bg-white hover:shadow transition"
+        className="inline-flex items-center justify-center w-9 h-9 rounded-md border border-gray-300 bg-white/80 dark:bg-youtube-dark-surface/80 dark:border-youtube-dark-surface3 hover:bg-white dark:hover:bg-youtube-dark-hover hover:shadow transition"
         aria-label="Loading theme toggle"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-indigo-600">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-blue-600">
           <path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
         </svg>
       </button>
@@ -65,7 +65,7 @@ export function ThemeToggle() {
     <button
       onClick={toggle}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-      className="inline-flex items-center justify-center w-9 h-9 rounded-md border border-gray-300 bg-white/80 dark:bg-gray-800/80 dark:border-gray-700 hover:bg-white hover:shadow transition"
+      className="inline-flex items-center justify-center w-9 h-9 rounded-md border border-gray-300 bg-white/80 dark:bg-youtube-dark-surface/80 dark:border-youtube-dark-surface3 hover:bg-white dark:hover:bg-youtube-dark-hover hover:shadow transition"
     >
       {isDark ? (
         // Sun icon
@@ -75,7 +75,7 @@ export function ThemeToggle() {
         </svg>
       ) : (
         // Moon icon - crescent moon with outline
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-indigo-600">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-blue-600">
           <path d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
         </svg>
       )}

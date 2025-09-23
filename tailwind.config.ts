@@ -12,19 +12,19 @@ export default {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        // YouTube-inspired dark theme colors
+        // Harmonized dark theme colors
         youtube: {
           dark: {
-            bg: "#0f0f0f",
-            surface: "#1f1f1f",
-            surface2: "#272727",
-            surface3: "#3d3d3d",
-            text: "#ffffff",
-            textSecondary: "#aaaaaa",
-            textMuted: "#717171",
-            red: "#ff0000",
-            blue: "#3ea6ff",
-            hover: "#373737",
+            bg: "#1a1b23",
+            surface: "#252731",
+            surface2: "#2f3349",
+            surface3: "#404354",
+            text: "#e4e6ea",
+            textSecondary: "#b8bcc8",
+            textMuted: "#8b919e",
+            red: "#ef4444",
+            blue: "#3b82f6",
+            hover: "#353849",
           }
         }
       },
