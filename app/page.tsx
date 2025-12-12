@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { Icon } from "@iconify/react";
 import { useLanguage } from "@/hooks/use-language";
 import { LanguageToggle } from "@/components/language-toggle";
@@ -21,12 +22,14 @@ export default function Home() {
           {/* Left Side */}
           <div className="w-full md:w-auto flex flex-col items-center relative">
             {/* Profile Image */}
-            <div className="w-32 h-32 md:w-48 md:h-48 rounded-full border-4 border-white dark:border-youtube-dark-surface2 overflow-hidden -mt-16 md:-mt-20">
-              <img
+            <div className="w-32 h-32 md:w-48 md:h-48 rounded-full border-4 border-white dark:border-youtube-dark-surface2 overflow-hidden -mt-16 md:-mt-20 relative">
+              <Image
                 src="/CSI00138.jpg"
                 alt="Profile"
-                className="object-cover w-full h-full scale-150"
+                fill
+                className="object-cover scale-150"
                 style={{ objectPosition: "50% 20%" }}
+                priority
               />
             </div>
 
