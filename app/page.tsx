@@ -5,7 +5,6 @@ import { Icon } from "@iconify/react";
 import { useLanguage } from "@/hooks/use-language";
 import { LanguageToggle } from "@/components/language-toggle";
 import { ThemeToggle } from "@/components/theme-toggle";
-import Link from "next/link";
 
 export default function Home() {
   const { t } = useLanguage();
@@ -77,11 +76,6 @@ export default function Home() {
           <div className="flex-1 flex flex-col gap-1 md:mt-0">
             <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-youtube-dark-text">{t("name")}</h2>
             <p className="text-sm text-gray-600 dark:text-youtube-dark-textSecondary">{t("title")}</p>
-            <Link href="/portfolio">
-              <button className="bg-gray-900 dark:bg-youtube-dark-surface2 text-white dark:text-youtube-dark-text px-4 py-1 rounded-lg hover:bg-gray-800 dark:hover:bg-youtube-dark-hover transition-colors">
-                {t("follow")}
-              </button>
-            </Link>
             <p className="text-gray-600 dark:text-youtube-dark-textSecondary text-sm">
               {t("description")}{" "}
               <a
@@ -96,14 +90,6 @@ export default function Home() {
             </p>
           </div>
         </div>
-      </div>
-      {/* Down Arrow to navigate to portfolio */}
-      <div className="absolute bottom-6 flex justify-center w-full">
-        <Link href="/portfolio" aria-label="Go to portfolio" className="animate-bounce text-gray-700 dark:text-youtube-dark-textSecondary hover:text-black dark:hover:text-youtube-dark-text transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
-            <path fillRule="evenodd" d="M11.47 3.97a.75.75 0 011.06 0l6 6a.75.75 0 11-1.06 1.06L12.75 6.31v13.94a.75.75 0 01-1.5 0V6.31L6.53 11.03a.75.75 0 11-1.06-1.06l6-6z" clipRule="evenodd" transform="rotate(180 12 12)" />
-          </svg>
-        </Link>
       </div>
     </div>
   );
