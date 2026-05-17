@@ -105,3 +105,126 @@ Alternatively, mention "Use `String.prototype.replaceAll` for replacing all occu
 But that's new (2021) but maybe not that unique.
 
 Better: "Use `Array.prototype.findLast
+
+### Update: 2026-05-17
+The user wants a short, unique JavaScript coding tip or a small useful utility function. They specifically say "Return ONLY the markdown content, no extra talk."
+
+So the assistant should output only markdown with the tip. Could be a tip about something like using destructuring for swapping variables, or using nullish coalescing assignment, or a small utility like `debounce`, `throttle`, `deepClone`, `groupBy`, `chunk`, `unique`, `random`, `formatDate`, etc.
+
+User says "Write a short, unique JavaScript coding tip or a small useful utility function for today."
+
+The output should be in markdown (maybe with code fences). Also no extra talk like "Here's the tip:" or "Sure". Just the markdown content. No preamble or concluding statements.
+
+Thus output something like:
+
+```
+## Tip: Swap variables without a temp using array destructuring
+
+```js
+let a = 1, b = 2;
+[a, b] = [b, a];
+// a = 2, b = 1
+```
+```
+
+Alternatively, can give a utility function. Example:
+
+```js
+/** Returns a random integer between min and max (inclusive) */
+const randomInt = (min = 0, max = 1) => Math.floor(Math.random() * (max - min + 1)) + min;
+```
+
+Better to give a short tip and a utility function. But the request is "Write a short, unique JavaScript coding tip OR a small useful utility function for today." So one or the other. Could do both: maybe give a tip as a short comment and also a utility function.
+
+Make it unique. Maybe something about using `Object.fromEntries` with `.map` to transform objects, or using `Array.flatMap`, or using optional chaining for default values.
+
+Example tip: Use `?.` to safely access deeply nested property with fallback:
+
+```js
+const city = user?.address?.city ?? 'Unknown';
+```
+
+Or utility function to deep clone using structuredClone.
+
+But perhaps a tip about `structuredClone` being available now.
+
+E.g.:
+
+```
+## Tip: Use `structuredClone` for deep cloning (available in Node 17+, modern browsers)
+
+```js
+const clone = structuredClone(originalObject);
+```
+```
+
+Alternatively, a unique tip: Use `Object.groupBy` (stage 3) or `Map.groupBy`.
+
+But there is a new `Array.groupBy`? Actually there is proposal for `Array.prototype.groupBy` in the TC39 process, but currently not in all browsers. Might be okay but to be safe, maybe not.
+
+Better to give tip: Use `Intl.Segmenter` for string splitting with grapheme clusters.
+
+But that might be too advanced. Could be something about how `Array.from` can be used for creating arrays from array-like objects.
+
+Could be something about the "replace" method with a callback can capture groups.
+
+E.g., using regex replace with named groups.
+
+But ask for "unique". Could also be about using `setInterval` for random intervals.
+
+Alternatively, something about "Array.reduceRight".
+
+But short and unique.
+
+Simplify: Use `?.` optional chaining with `??` for nullish coalescing to handle missing values elegantly.
+
+Also a small utility function: `debounce`, `throttle`, `clamp`, `chunk`, `flattenDeep`, `uniqueBy`.
+
+Perhaps give a utility function that returns a promise that resolves after a delay, like `sleep`:
+
+```js
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+// Usage: await sleep(1000);
+```
+
+That's simple and useful. Also a tip: Using `?.` and `??`.
+
+But they want only markdown content, not extra talk. So I should output something like:
+
+```
+## Tip: Sleep with a one-liner Promise
+
+```js
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+// usage: await sleep(2000);
+```
+```
+
+Alternatively, provide both tip and utility as separate sections.
+
+But the request says "Write a short, unique JavaScript coding tip OR a small useful utility function for today."
+
+Thus it's okay to provide a tip OR a utility. I could provide both but it's optional.
+
+Let's output one distinct tip that is unique and useful: Use `structuredClone` for deep cloning.
+
+Also can include usage for cloning objects, arrays, dates etc.
+
+Thus produce:
+
+```
+## Tip: Deep clone any serializable value with `structuredClone`
+
+```js
+const original = { d: new Date(), r: /abc/g, n: null };
+const copy = structuredClone(original);
+copy.d.getFullYear(); // same as original.d.getFullYear()
+```
+```
+
+Better also mention that it's built-in in modern environments and faster than JSON.parse(JSON.stringify(...)). Also note that it does not clone functions, DOM nodes, etc.
+
+Alternatively, a small utility function: `chunk(array, size)`.
+
+```js
+/** Splits array into
