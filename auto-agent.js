@@ -1,176 +1,139 @@
 import Anthropic from '@anthropic-ai/sdk';
 import fs from 'fs';
 import path from 'path';
+import { execSync } from 'child_process';
 
 const client = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY ?? process.env.CLAUDE_API_KEY,
   baseURL: process.env.ANTHROPIC_BASE_URL ?? "https://api.minimax.io/anthropic"
 });
 
-const PLAN = [
-  { day: 1, task: "Fix layout.tsx - remove XSS inline script, use ThemeToggle only", file: "app/layout.tsx" },
-  { day: 2, task: "Fix use-language.tsx - add localStorage validation", file: "hooks/use-language.tsx" },
-  { day: 3, task: "Fix theme-toggle.tsx - cookie-from-localStorage pattern", file: "components/theme-toggle.tsx" },
-  { day: 4, task: "Extract cookie utils to lib/utils.ts", file: "lib/utils.ts" },
-  { day: 5, task: "Fix hardcoded git credentials in workflow", file: ".github/workflows/auto-commit.yml" },
-  { day: 6, task: "Add .env.example documenting env vars", file: ".env.example" },
-  { day: 7, task: "Remove unused dependencies (framer-motion, iconify)", file: "package.json" },
-  { day: 8, task: "Create /lib directory structure", file: "lib/" },
-  { day: 9, task: "Extract social links to lib/constants.ts", file: "lib/constants.ts" },
-  { day: 10, task: "Extract translations to lib/translations.ts", file: "lib/translations.ts" },
-  { day: 11, task: "Break page.tsx into smaller components", file: "app/page.tsx" },
-  { day: 12, task: "Replace magic numbers with constants", file: "lib/constants.ts" },
-  { day: 13, task: "Add TypeScript generics to t function", file: "hooks/use-language.tsx" },
-  { day: 14, task: "Remove unused translation keys", file: "hooks/use-language.tsx" },
-  { day: 15, task: "Fix ESLint config to flat format", file: "eslint.config.mjs" },
-  { day: 16, task: "Add error logging to silent catch blocks", file: "hooks/use-language.tsx" },
-  { day: 17, task: "Fix Tailwind content globs", file: "tailwind.config.ts" },
-  { day: 18, task: "Fix Node version consistency in workflows", file: ".github/workflows/" },
-  { day: 19, task: "Add React error boundary", file: "components/ErrorBoundary.tsx" },
-  { day: 20, task: "Fix Image component (sizes, alt)", file: "app/page.tsx" },
-  { day: 21, task: "Clean up theme-toggle.tsx (TODO, xmlns)", file: "components/theme-toggle.tsx" },
-  { day: 22, task: "Add loading skeleton component", file: "components/LoadingSkeleton.tsx" },
-  { day: 23, task: "Verify build passes", file: "package.json" },
-  { day: 24, task: "Run npm audit fix", file: "package.json" },
-  { day: 25, task: "Final review and cleanup", file: "README.md" },
-];
+function getFileTree() {
+  const files = [];
+  const ignore = ['node_modules', '.next', '.git', '.claude'];
 
-const PROGRESS_FILE = 'REFACTOR_PROGRESS.md';
-
-function getToday() {
-  return new Date().toISOString().split('T')[0];
-}
-
-function readProgress() {
-  try {
-    const content = fs.readFileSync(PROGRESS_FILE, 'utf8');
-    const lines = content.split('\n');
-    const done = {};
-    for (const line of lines) {
-      const m = line.match(/^\d+\.\s+\[(x)\]\s+/);
-      if (m) {
-        const num = parseInt(line.split('.')[0]);
-        done[num] = true;
+  function walk(dir, prefix = '') {
+    try {
+      const entries = fs.readdirSync(dir, { withFileTypes: true });
+      for (const entry of entries) {
+        if (ignore.includes(entry.name)) continue;
+        const fullPath = path.join(dir, entry.name);
+        if (entry.isDirectory()) {
+          files.push(`${prefix}${entry.name}/`);
+          walk(fullPath, prefix + '  ');
+        } else {
+          files.push(`${prefix}${entry.name}`);
+        }
       }
-    }
-    return done;
-  } catch {
-    return {};
+    } catch {}
   }
+
+  walk('.');
+  return files.join('\n');
 }
 
-function writeProgress(done) {
-  let content = `# Refactor Progress\n\n`;
-  content += `Last updated: ${getToday()}\n\n`;
-  for (const item of PLAN) {
-    const checked = done[item.day] ? '[x]' : '[ ]';
-    content += `${item.day}. ${checked} ${item.task}\n`;
-  }
-  fs.writeFileSync(PROGRESS_FILE, content);
-}
+async function askMiniMax() {
+  const fileTree = getFileTree();
+  const today = new Date().toISOString().split('T')[0];
 
-function getNextTask(done) {
-  for (const item of PLAN) {
-    if (!done[item.day]) return item;
-  }
-  return null;
-}
-
-function readFileContent(filePath) {
-  try {
-    return fs.readFileSync(filePath, 'utf8');
-  } catch {
-    return null;
-  }
-}
-
-async function askMiniMax(task, file, fileContent) {
-  console.log(`Analyzing: ${task}`);
-  console.log(`  File: ${file}`);
+  console.log('Scanning codebase...\n');
 
   const message = await client.messages.create({
     model: "MiniMax-M2.7",
-    max_tokens: 2048,
+    max_tokens: 4096,
     messages: [{
       role: "user",
-      content: `You are a code refactoring assistant. Your task today:
+      content: `You are an expert developer. Today is ${today}.
 
-TASK: ${task}
-FILE: ${file}
+Look at this codebase, decide what needs improvement, and make the changes yourself.
 
-${fileContent ? `CURRENT FILE CONTENT:\n\`\`\`\n${fileContent.slice(0, 8000)}\n\`\`\`` : 'File does not exist yet - create it.'}
+DIRECTORY:
+${fileTree}
 
-Please:
-1. Read the current file content carefully
-2. Make the necessary changes to complete the task
-3. Return ONLY a JSON response (no markdown, just raw JSON):
-{"action": "create|edit|delete|noop", "path": "relative/path/filename", "content": "full file content if create/edit, null otherwise", "summary": "one line description"}
+Think about what would make this codebase better. You can:
+- Fix bugs or security issues
+- Improve structure or organization
+- Add tests
+- Refactor for clarity
+- Remove dead code
+- Improve performance
+- ANYTHING important
 
-If no changes needed:
-{"action": "noop", "path": "", "content": null, "summary": "already correct"}`
+Read files you think need changes. Make the changes and commit them.
+
+Respond with a JSON array (no markdown):
+[
+  {
+    "path": "file path",
+    "action": "create|edit|delete",
+    "content": "full file content if create/edit",
+    "commit": "short commit message"
+  }
+]
+
+Make at least ONE meaningful commit today. Find the most important thing to fix.`
     }]
   });
 
-  return message.content[0].text;
+  const content = message.content;
+  const textBlock = content.find(b => b.type === 'text');
+  return textBlock?.text ?? content[0]?.text ?? '';
 }
 
-async function applyChange(action, filePath, content) {
-  if (action === 'noop' || action === 'delete') return false;
+function applyChange(action, filePath, content) {
+  if (!action || action === 'noop' || action === 'delete') return false;
 
   const dir = path.dirname(filePath);
-  if (dir && dir !== '.') {
+  if (dir && dir !== '.' && dir !== '..') {
     fs.mkdirSync(dir, { recursive: true });
   }
 
-  if (action === 'delete') {
-    fs.unlinkSync(filePath);
-  } else {
-    fs.writeFileSync(filePath, content);
-  }
+  fs.writeFileSync(filePath, content);
   return true;
 }
 
 async function main() {
-  const today = getToday();
-  console.log(`\nRefactor Agent - ${today}\n`);
+  console.log('\n=== Refactor Agent ===\n');
 
-  const done = readProgress();
-  const task = getNextTask(done);
+  const response = await askMiniMax();
 
-  if (!task) {
-    console.log("All tasks completed!");
-    return;
-  }
-
-  console.log(`\nDay ${task.day}: ${task.task}`);
-
-  const fileContent = readFileContent(task.file);
-  const response = await askMiniMax(task.task, task.file, fileContent);
-
-  let parsed;
+  let fixes;
   try {
-    parsed = JSON.parse(response.trim());
-  } catch {
-    console.log("Could not parse AI response, skipping...");
+    // Strip markdown code blocks if present
+    let jsonStr = response.trim();
+    jsonStr = jsonStr.replace(/^```json\n?/, '').replace(/\n?```$/, '');
+    fixes = JSON.parse(jsonStr);
+  } catch (e) {
+    console.log('Could not parse response:', e.message);
+    console.log('Raw:', response.slice(0, 300));
     return;
   }
 
-  if (parsed.action && parsed.action !== 'noop') {
-    const changed = await applyChange(parsed.action, parsed.path, parsed.content);
-    if (changed) {
-      console.log(`Done: ${parsed.summary}`);
-      done[task.day] = true;
-    }
-  } else {
-    console.log(`No changes: ${parsed.summary || 'already correct'}`);
-    done[task.day] = true;
+  if (!Array.isArray(fixes) || fixes.length === 0) {
+    console.log('No changes needed today.');
+    return;
   }
 
-  writeProgress(done);
-  console.log(`\nProgress saved to ${PROGRESS_FILE}`);
+  console.log(`Found ${fixes.length} change(s):\n`);
+
+  for (const fix of fixes) {
+    console.log(`- ${fix.commit || fix.path}`);
+
+    if (applyChange(fix.action, fix.path, fix.content)) {
+      try {
+        execSync(`git add "${fix.path}"`, { stdio: 'pipe' });
+        execSync(`git commit -m "${fix.commit || 'chore: update'}"`, { stdio: 'pipe' });
+        console.log(`  Committed`);
+      } catch (e) {
+        console.log(`  Commit failed: ${e.message}`);
+      }
+    }
+  }
+
+  console.log('\nDone.');
 }
 
 main().catch(e => {
-  console.error("Agent Error:", e);
+  console.error('Error:', e);
   process.exit(1);
 });
