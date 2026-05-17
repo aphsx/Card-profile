@@ -22,7 +22,8 @@
       "Bash(git fetch *)",
       "Bash(git pull *)",
       "Bash(git stash *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(node --check /Users/aphsx/Documents/GitHub/Card-profile/auto-agent.js)"
     ]
   }
 }
