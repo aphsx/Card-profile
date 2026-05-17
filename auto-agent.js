@@ -1,6 +1,8 @@
 import Anthropic from '@anthropic-ai/sdk';
 
-const client = new Anthropic();
+const client = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY ?? process.env.CLAUDE_API_KEY
+});
 
 async function main() {
   try {

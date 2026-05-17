@@ -14,7 +14,8 @@
       "WebFetch(domain:platform.minimaxi.com)",
       "Bash(node auto-agent.js)",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(export CLAUDE_API_KEY=\"sk-cp-sA35osgKSULjMGt9JsPfod4Gr40vn4_i8uoKtCn8NOR6S_AkCrcbs77hpoTDsuwt05L9eRFeM1awVI_G0DmBL9eKbpWBuNPZTQLCRtFXce7itoTOeGyQscM\")"
     ]
   }
 }
