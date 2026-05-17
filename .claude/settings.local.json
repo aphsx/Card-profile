@@ -18,7 +18,10 @@
       "Bash(export CLAUDE_API_KEY=\"sk-cp-sA35osgKSULjMGt9JsPfod4Gr40vn4_i8uoKtCn8NOR6S_AkCrcbs77hpoTDsuwt05L9eRFeM1awVI_G0DmBL9eKbpWBuNPZTQLCRtFXce7itoTOeGyQscM\")",
       "Bash(git config *)",
       "Bash(sed -i '' 's/github-actions\\\\[bot\\\\]@users.noreply.github.com/aphisityns170960@gmail.com/g' .github/workflows/auto-commit.yml)",
-      "Bash(sed -i '' 's/github-actions\\\\[bot\\\\]/aphsx/g' .github/workflows/auto-commit.yml)"
+      "Bash(sed -i '' 's/github-actions\\\\[bot\\\\]/aphsx/g' .github/workflows/auto-commit.yml)",
+      "Bash(git fetch *)",
+      "Bash(git pull *)",
+      "Bash(git stash *)"
     ]
   }
 }
