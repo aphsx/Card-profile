@@ -22,7 +22,7 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: npm init -y
+        run: npm install @anthropic-ai/sdk
 
       - name: Run AI Agent
         env:
