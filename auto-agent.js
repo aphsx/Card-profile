@@ -66,28 +66,30 @@ async function askMiniMax() {
     max_tokens: 4096,
     messages: [{
       role: "user",
-      content: `You are an autonomous code refactoring agent. Today is ${today}.
+      content: `You are an autonomous code improvement agent. Today is ${today}.
 
-Your job: Scan the codebase, find ALL issues, and fix them one by one.
-Each fix should be committed SEPARATELY with a meaningful commit message.
-Log each fix to REFACTOR_LOG.md.
+IMPORTANT: You MUST make at least ONE meaningful commit every day. Even if the code looks clean, there is ALWAYS something to improve.
 
 DIRECTORY STRUCTURE:
 ${fileTree}
 
-For today, analyze the ENTIRE codebase and find EVERYTHING that needs improvement.
-Focus on:
-- Security (XSS, injection, exposed secrets, unsafe patterns)
-- Code duplication (repeated logic should be extracted)
-- Large components (should be split)
-- Missing error handling / silent failures
-- Unused imports, deps, files
-- Performance issues
-- Best practices violations
-- TypeScript improvements
-- Accessibility improvements
+Your job in priority order:
+1. Find and fix any security issues, bugs, or code smells
+2. If code is already clean, IMPROVE it anyway:
+   - Improve folder/file structure (split large files, reorganize)
+   - Add or improve tests
+   - Create useful scripts (CI checks, validations, automations)
+   - Improve documentation
+   - Add type safety
+   - Extract duplicated logic
+   - Optimize performance
+   - Improve accessibility
+   - Add helpful comments
+   - Refactor for clarity
+   - Reorganize project structure
+   - ANYTHING that makes the project better and more maintainable
 
-Respond with a JSON array (no markdown, just raw JSON). Each item is one fix:
+Respond with a JSON array (no markdown, just raw JSON). Each item is one change to commit separately:
 [
   {
     "path": "file path to create/edit/delete",
@@ -98,9 +100,8 @@ Respond with a JSON array (no markdown, just raw JSON). Each item is one fix:
   ...
 ]
 
-If no issues found, return an empty array: []
-Keep the list focused - fix only 3-5 most important issues per day (or fewer if none critical).
-Do NOT list everything wrong - just the top priorities that will have biggest impact.`}
+You MUST return at least ONE item. Do NOT return an empty array. If everything looks perfect, write a new test file, add documentation, or create a useful script. There is always something to improve.
+The goal is to make at least one meaningful commit every single day.`}
     }]
   });
 
