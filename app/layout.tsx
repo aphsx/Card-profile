@@ -36,6 +36,8 @@ export const metadata: Metadata = {
   description: "Full Stack Web Developer and Programmer specializing in modern web technologies",
 };
 
+export const dynamic = "force-dynamic";
+
 export default async function RootLayout({
   children,
 }: {
