@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 async function callMiniMax() {
-  const apiKey = process.env.MINIMAX_API_KEY;
+  const apiKey = process.env.CLAUDE_API_KEY;
   const url = 'https://api.minimaxi.com/v1/chat/completions';
 
   const payload = {
