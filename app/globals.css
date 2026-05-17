@@ -1,37 +1,18 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #000000;
 }
 
-.dark {
-  --background: #1a1b23;
-  --foreground: #e4e6ea;
-}
+@layer base {
+  html {
+     scroll-behavior: smooth;
+  }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  /* Default for English/Latin: Geist */
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  body {
+    @apply bg-[var(--background)] text-[var(--foreground)] antialiased;
+  }
 }
-
-/* When app language is Thai, prefer Kanit */
-html[lang="th"] body {
-  font-family: var(--font-kanit), Arial, Helvetica, sans-serif;
-}
-
-/* Hide scrollbar */
-html, body {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer and Edge */
-}
-
-html::-webkit-scrollbar, body::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, and Opera */
-}
- 
