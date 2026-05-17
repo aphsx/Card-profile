@@ -1,182 +1,176 @@
 import Anthropic from '@anthropic-ai/sdk';
 import fs from 'fs';
 import path from 'path';
-import { execSync } from 'child_process';
 
 const client = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY ?? process.env.CLAUDE_API_KEY,
   baseURL: process.env.ANTHROPIC_BASE_URL ?? "https://api.minimax.io/anthropic"
 });
 
-const LOG_FILE = 'REFACTOR_LOG.md';
+const PLAN = [
+  { day: 1, task: "Fix layout.tsx - remove XSS inline script, use ThemeToggle only", file: "app/layout.tsx" },
+  { day: 2, task: "Fix use-language.tsx - add localStorage validation", file: "hooks/use-language.tsx" },
+  { day: 3, task: "Fix theme-toggle.tsx - cookie-from-localStorage pattern", file: "components/theme-toggle.tsx" },
+  { day: 4, task: "Extract cookie utils to lib/utils.ts", file: "lib/utils.ts" },
+  { day: 5, task: "Fix hardcoded git credentials in workflow", file: ".github/workflows/auto-commit.yml" },
+  { day: 6, task: "Add .env.example documenting env vars", file: ".env.example" },
+  { day: 7, task: "Remove unused dependencies (framer-motion, iconify)", file: "package.json" },
+  { day: 8, task: "Create /lib directory structure", file: "lib/" },
+  { day: 9, task: "Extract social links to lib/constants.ts", file: "lib/constants.ts" },
+  { day: 10, task: "Extract translations to lib/translations.ts", file: "lib/translations.ts" },
+  { day: 11, task: "Break page.tsx into smaller components", file: "app/page.tsx" },
+  { day: 12, task: "Replace magic numbers with constants", file: "lib/constants.ts" },
+  { day: 13, task: "Add TypeScript generics to t function", file: "hooks/use-language.tsx" },
+  { day: 14, task: "Remove unused translation keys", file: "hooks/use-language.tsx" },
+  { day: 15, task: "Fix ESLint config to flat format", file: "eslint.config.mjs" },
+  { day: 16, task: "Add error logging to silent catch blocks", file: "hooks/use-language.tsx" },
+  { day: 17, task: "Fix Tailwind content globs", file: "tailwind.config.ts" },
+  { day: 18, task: "Fix Node version consistency in workflows", file: ".github/workflows/" },
+  { day: 19, task: "Add React error boundary", file: "components/ErrorBoundary.tsx" },
+  { day: 20, task: "Fix Image component (sizes, alt)", file: "app/page.tsx" },
+  { day: 21, task: "Clean up theme-toggle.tsx (TODO, xmlns)", file: "components/theme-toggle.tsx" },
+  { day: 22, task: "Add loading skeleton component", file: "components/LoadingSkeleton.tsx" },
+  { day: 23, task: "Verify build passes", file: "package.json" },
+  { day: 24, task: "Run npm audit fix", file: "package.json" },
+  { day: 25, task: "Final review and cleanup", file: "README.md" },
+];
+
+const PROGRESS_FILE = 'REFACTOR_PROGRESS.md';
 
 function getToday() {
   return new Date().toISOString().split('T')[0];
 }
 
-function appendLog(entry) {
-  const timestamp = getToday();
-  fs.appendFileSync(LOG_FILE, `\n### ${timestamp}\n${entry}\n`);
-}
-
-function getFileTree() {
-  const files = [];
-  const ignore = ['node_modules', '.next', '.git', '.claude'];
-
-  function walk(dir, prefix = '') {
-    try {
-      const entries = fs.readdirSync(dir, { withFileTypes: true });
-      for (const entry of entries) {
-        if (ignore.includes(entry.name)) continue;
-        const fullPath = path.join(dir, entry.name);
-        if (entry.isDirectory()) {
-          files.push(`${prefix}${entry.name}/`);
-          walk(fullPath, prefix + '  ');
-        } else {
-          files.push(`${prefix}${entry.name}`);
-        }
-      }
-    } catch {}
-  }
-
-  walk('.');
-  return files.join('\n');
-}
-
-function commitChange(filePath, message) {
+function readProgress() {
   try {
-    execSync(`git add "${filePath}"`, { stdio: 'pipe' });
-    execSync(`git commit -m "${message}"`, { stdio: 'pipe' });
-    console.log(`  Committed: ${filePath}`);
-    return true;
-  } catch (e) {
-    console.log(`  Commit failed for ${filePath}: ${e.message}`);
-    return false;
+    const content = fs.readFileSync(PROGRESS_FILE, 'utf8');
+    const lines = content.split('\n');
+    const done = {};
+    for (const line of lines) {
+      const m = line.match(/^\d+\.\s+\[(x)\]\s+/);
+      if (m) {
+        const num = parseInt(line.split('.')[0]);
+        done[num] = true;
+      }
+    }
+    return done;
+  } catch {
+    return {};
   }
 }
 
-async function askMiniMax() {
-  const fileTree = getFileTree();
-  const today = getToday();
+function writeProgress(done) {
+  let content = `# Refactor Progress\n\n`;
+  content += `Last updated: ${getToday()}\n\n`;
+  for (const item of PLAN) {
+    const checked = done[item.day] ? '[x]' : '[ ]';
+    content += `${item.day}. ${checked} ${item.task}\n`;
+  }
+  fs.writeFileSync(PROGRESS_FILE, content);
+}
 
-  console.log(`Scanning codebase for improvements...\n`);
+function getNextTask(done) {
+  for (const item of PLAN) {
+    if (!done[item.day]) return item;
+  }
+  return null;
+}
+
+function readFileContent(filePath) {
+  try {
+    return fs.readFileSync(filePath, 'utf8');
+  } catch {
+    return null;
+  }
+}
+
+async function askMiniMax(task, file, fileContent) {
+  console.log(`Analyzing: ${task}`);
+  console.log(`  File: ${file}`);
 
   const message = await client.messages.create({
     model: "MiniMax-M2.7",
-    max_tokens: 4096,
+    max_tokens: 2048,
     messages: [{
       role: "user",
-      content: `You are an autonomous code improvement agent. Today is ${today}.
+      content: `You are a code refactoring assistant. Your task today:
 
-IMPORTANT: You MUST make at least ONE meaningful commit every day. Even if the code looks clean, there is ALWAYS something to improve.
+TASK: ${task}
+FILE: ${file}
 
-DIRECTORY STRUCTURE:
-${fileTree}
+${fileContent ? `CURRENT FILE CONTENT:\n\`\`\`\n${fileContent.slice(0, 8000)}\n\`\`\`` : 'File does not exist yet - create it.'}
 
-Your job in priority order:
-1. Find and fix any security issues, bugs, or code smells
-2. If code is already clean, IMPROVE it anyway:
-   - Improve folder/file structure (split large files, reorganize)
-   - Add or improve tests
-   - Create useful scripts (CI checks, validations, automations)
-   - Improve documentation
-   - Add type safety
-   - Extract duplicated logic
-   - Optimize performance
-   - Improve accessibility
-   - Add helpful comments
-   - Refactor for clarity
-   - Reorganize project structure
-   - ANYTHING that makes the project better and more maintainable
+Please:
+1. Read the current file content carefully
+2. Make the necessary changes to complete the task
+3. Return ONLY a JSON response (no markdown, just raw JSON):
+{"action": "create|edit|delete|noop", "path": "relative/path/filename", "content": "full file content if create/edit, null otherwise", "summary": "one line description"}
 
-Respond with a JSON array (no markdown, just raw JSON). Each item is one change to commit separately:
-[
-  {
-    "path": "file path to create/edit/delete",
-    "action": "create|edit|delete",
-    "content": "full file content if create/edit, null if delete",
-    "commit_message": "short descriptive commit message"
-  },
-  ...
-]
-
-You MUST return at least ONE item. Do NOT return an empty array. If everything looks perfect, write a new test file, add documentation, or create a useful script. There is always something to improve.
-The goal is to make at least one meaningful commit every single day.`
+If no changes needed:
+{"action": "noop", "path": "", "content": null, "summary": "already correct"}`
     }]
   });
 
   return message.content[0].text;
 }
 
-function applyChange(action, filePath, content) {
-  if (!action || action === 'noop') return false;
+async function applyChange(action, filePath, content) {
+  if (action === 'noop' || action === 'delete') return false;
 
-  try {
-    const dir = path.dirname(filePath);
-    if (dir && dir !== '.' && dir !== '..') {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-
-    if (action === 'delete') {
-      fs.unlinkSync(filePath);
-    } else {
-      fs.writeFileSync(filePath, content);
-    }
-    return true;
-  } catch (e) {
-    console.log(`  Failed to apply ${filePath}: ${e.message}`);
-    return false;
+  const dir = path.dirname(filePath);
+  if (dir && dir !== '.') {
+    fs.mkdirSync(dir, { recursive: true });
   }
+
+  if (action === 'delete') {
+    fs.unlinkSync(filePath);
+  } else {
+    fs.writeFileSync(filePath, content);
+  }
+  return true;
 }
 
 async function main() {
   const today = getToday();
-  console.log(`\n=== Refactor Agent - ${today} ===\n`);
+  console.log(`\nRefactor Agent - ${today}\n`);
 
-  const response = await askMiniMax();
+  const done = readProgress();
+  const task = getNextTask(done);
 
-  let fixes;
+  if (!task) {
+    console.log("All tasks completed!");
+    return;
+  }
+
+  console.log(`\nDay ${task.day}: ${task.task}`);
+
+  const fileContent = readFileContent(task.file);
+  const response = await askMiniMax(task.task, task.file, fileContent);
+
+  let parsed;
   try {
-    fixes = JSON.parse(response.trim());
-  } catch (e) {
-    console.log('Could not parse AI response:', e.message);
-    console.log('Raw:', response.slice(0, 500));
+    parsed = JSON.parse(response.trim());
+  } catch {
+    console.log("Could not parse AI response, skipping...");
     return;
   }
 
-  if (!Array.isArray(fixes) || fixes.length === 0) {
-    console.log('No issues found today. Codebase looks good!');
-    appendLog(`✅ ${today} - No critical issues found`);
-    return;
-  }
-
-  console.log(`Found ${fixes.length} issue(s) to fix:\n`);
-
-  const logged = [];
-
-  for (const fix of fixes) {
-    console.log(`\n${fix.commit_message || 'Fix'}`);
-    console.log(`  Path: ${fix.path}`);
-
-    const applied = applyChange(fix.action, fix.path, fix.content);
-    if (applied && fix.path) {
-      const committed = commitChange(fix.path, fix.commit_message || 'chore: refactor');
-      if (committed) {
-        logged.push(`- **${fix.path}**: ${fix.commit_message || fix.action}`);
-      }
+  if (parsed.action && parsed.action !== 'noop') {
+    const changed = await applyChange(parsed.action, parsed.path, parsed.content);
+    if (changed) {
+      console.log(`Done: ${parsed.summary}`);
+      done[task.day] = true;
     }
+  } else {
+    console.log(`No changes: ${parsed.summary || 'already correct'}`);
+    done[task.day] = true;
   }
 
-  if (logged.length > 0) {
-    const logEntry = `✅ Fixed ${logged.length} issue(s):\n${logged.join('\n')}`;
-    appendLog(logEntry);
-  }
-
-  console.log(`\n=== Done ===`);
-  console.log(`Logged to ${LOG_FILE}`);
+  writeProgress(done);
+  console.log(`\nProgress saved to ${PROGRESS_FILE}`);
 }
 
 main().catch(e => {
-  console.error('Agent Error:', e);
+  console.error("Agent Error:", e);
   process.exit(1);
 });

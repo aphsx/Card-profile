@@ -32,7 +32,9 @@
       "Bash(export ANTHROPIC_API_KEY=\"sk-cp-sA35osgKSULjMGt9JsPfod4Gr40vn4_i8uoKtCn8NOR6S_AkCrcbs77hpoTDsuwt05L9eRFeM1awVI_G0DmBL9eKbpWBuNPZTQLCRtFXce7itoTOeGyQscM\")",
       "Bash(grep -n '`')",
       "Bash(node -e ' *)",
-      "Bash(grep -n '`' auto-agent.js)"
+      "Bash(grep -n '`' auto-agent.js)",
+      "Bash(git checkout *)",
+      "Bash(node --check /dev/stdin)"
     ]
   }
 }
