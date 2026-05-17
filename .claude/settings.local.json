@@ -12,7 +12,9 @@
       "WebSearch",
       "WebFetch(domain:www.minimaxi.com)",
       "WebFetch(domain:platform.minimaxi.com)",
-      "Bash(node auto-agent.js)"
+      "Bash(node auto-agent.js)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
     ]
   }
 }
