@@ -101,7 +101,7 @@ Respond with a JSON array (no markdown, just raw JSON). Each item is one change 
 ]
 
 You MUST return at least ONE item. Do NOT return an empty array. If everything looks perfect, write a new test file, add documentation, or create a useful script. There is always something to improve.
-The goal is to make at least one meaningful commit every single day.`}
+The goal is to make at least one meaningful commit every single day.`
     }]
   });
 

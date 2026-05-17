@@ -23,7 +23,16 @@
       "Bash(git pull *)",
       "Bash(git stash *)",
       "Bash(git push *)",
-      "Bash(node --check /Users/aphsx/Documents/GitHub/Card-profile/auto-agent.js)"
+      "Bash(node --check /Users/aphsx/Documents/GitHub/Card-profile/auto-agent.js)",
+      "Bash(awk 'NR==105{print \"Line 105:\"; print}{}')",
+      "Bash(curl -sL \"https://raw.githubusercontent.com/aphsx/Card-profile/main/auto-agent.js\")",
+      "Bash(xxd)",
+      "Bash(curl -sL \"https://raw.githubusercontent.com/aphsx/Card-profile/fd60829/auto-agent.js\")",
+      "Bash(node -e \"console.log\\('Syntax OK'\\)\")",
+      "Bash(export ANTHROPIC_API_KEY=\"sk-cp-sA35osgKSULjMGt9JsPfod4Gr40vn4_i8uoKtCn8NOR6S_AkCrcbs77hpoTDsuwt05L9eRFeM1awVI_G0DmBL9eKbpWBuNPZTQLCRtFXce7itoTOeGyQscM\")",
+      "Bash(grep -n '`')",
+      "Bash(node -e ' *)",
+      "Bash(grep -n '`' auto-agent.js)"
     ]
   }
 }
