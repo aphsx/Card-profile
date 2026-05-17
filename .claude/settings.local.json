@@ -6,7 +6,13 @@
       "Bash(npm install)",
       "Bash(npm audit *)",
       "Bash(npm install *)",
-      "Bash(npm view *)"
+      "Bash(npm view *)",
+      "Bash(node --check auto-agent.js)",
+      "WebFetch(domain:api.minimax.chat)",
+      "WebSearch",
+      "WebFetch(domain:www.minimaxi.com)",
+      "WebFetch(domain:platform.minimaxi.com)",
+      "Bash(node auto-agent.js)"
     ]
   }
 }
