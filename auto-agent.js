@@ -1,13 +1,10 @@
 import Anthropic from '@anthropic-ai/sdk';
 
-const client = new Anthropic({
-  apiKey: process.env.CLAUDE_API_KEY,
-  baseURL: "https://api.minimax.io/anthropic"
-});
+const client = new Anthropic();
 
 async function main() {
   try {
-    console.log("Calling MiniMax (Anthropic-compatible) API...");
+    console.log("Calling MiniMax API...");
 
     const message = await client.messages.create({
       model: "MiniMax-M2.7",
