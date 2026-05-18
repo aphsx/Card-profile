@@ -129,6 +129,81 @@ Respond with ONLY the commit message, no quotes, no explanation.`
   }
 }
 
+function getVerificationCommands() {
+  const pkg = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
+  const commands = [];
+
+  if (pkg.scripts?.test) commands.push({ cmd: 'npm test', name: 'test' });
+  if (pkg.scripts?.build) commands.push({ cmd: 'npm run build', name: 'build' });
+  if (pkg.scripts?.lint) commands.push({ cmd: 'npm run lint', name: 'lint' });
+  if (pkg.scripts?.typecheck) commands.push({ cmd: 'npm run typecheck', name: 'typecheck' });
+
+  return commands;
+}
+
+function captureVerificationErrors() {
+  const verifications = getVerificationCommands();
+  if (verifications.length === 0) return '';
+
+  let errorLog = '';
+  for (const v of verifications) {
+    try {
+      execSync(v.cmd, { stdio: 'pipe' });
+    } catch (e) {
+      errorLog += `${v.name}: ${e.stderr?.toString() || e.stdout?.toString() || e.message}\n`;
+    }
+  }
+  return errorLog;
+}
+
+async function runVerificationAndFix(fix, errorLog) {
+  const verifications = getVerificationCommands();
+  const failed = verifications.filter(v => errorLog.includes(v.name));
+
+  if (failed.length === 0) return true;
+
+  console.log(`\n  Verification failed: ${failed.map(v => v.name).join(', ')}. Asking AI to fix...\n`);
+
+  const fixResponse = await client.messages.create({
+    model: "MiniMax-M2.7",
+    max_tokens: 4096,
+    messages: [{
+      role: "user",
+      content: `The following changes caused verification failures:
+
+File: ${fix.path}
+Failed: ${failed.map(v => v.name).join(', ')}
+
+Error log:
+${errorLog}
+
+Fix the issue. Return a JSON object:
+{
+  "path": "file path",
+  "action": "edit",
+  "content": "corrected full file content"
+}
+
+Only return the JSON, no explanation.`
+    }]
+  });
+
+  const text = fixResponse.content.find(b => b.type === 'text')?.text ?? fixResponse.content[0]?.text ?? '';
+  let jsonStr = text.trim().replace(/^```json\n?/, '').replace(/\n?```$/, '');
+
+  try {
+    const corrected = JSON.parse(jsonStr);
+    if (corrected.content) {
+      fs.writeFileSync(corrected.path, corrected.content);
+      console.log(`  Applied fix to ${corrected.path}`);
+      return false;
+    }
+  } catch (e) {
+    console.log(`  Could not parse fix response: ${e.message}`);
+  }
+  return false;
+}
+
 async function main() {
   console.log('\n=== Refactor Agent ===\n');
 
@@ -166,6 +241,18 @@ async function main() {
       console.log(`  Committed: ${commitMsg}`);
     } catch (e) {
       console.log(`  Commit failed: ${e.message}`);
+    }
+
+    const errorLog = captureVerificationErrors();
+    const success = errorLog ? await runVerificationAndFix(fix, errorLog) : true;
+    if (!success) {
+      let retryCount = 0;
+      while (!success && retryCount < 3) {
+        retryCount++;
+        const nextErrorLog = captureVerificationErrors();
+        if (!nextErrorLog) break;
+        await runVerificationAndFix(fix, nextErrorLog);
+      }
     }
   }
 
