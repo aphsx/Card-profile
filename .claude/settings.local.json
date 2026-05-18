@@ -35,7 +35,8 @@
       "Bash(grep -n '`' auto-agent.js)",
       "Bash(git checkout *)",
       "Bash(node --check /dev/stdin)",
-      "Bash(curl -sL \"https://raw.githubusercontent.com/aphsx/Card-profile/763005b/auto-agent.js\")"
+      "Bash(curl -sL \"https://raw.githubusercontent.com/aphsx/Card-profile/763005b/auto-agent.js\")",
+      "Bash(vercel --version)"
     ]
   }
 }

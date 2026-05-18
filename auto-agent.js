@@ -141,6 +141,35 @@ function getVerificationCommands() {
   return commands;
 }
 
+async function checkVercelStatus() {
+  const token = process.env.VERCEL_TOKEN;
+  if (!token) return null;
+
+  try {
+    const response = await fetch('https://api.vercel.com/v6/deployments?limit=1', {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) return null;
+
+    const data = await response.json();
+    const latest = data.deployments?.[0];
+    if (!latest) return null;
+
+    return {
+      url: latest.url,
+      state: latest.state,
+      readyState: latest.readyState,
+      error: latest.error || null
+    };
+  } catch (e) {
+    return null;
+  }
+}
+
 function captureVerificationErrors() {
   const verifications = getVerificationCommands();
   if (verifications.length === 0) return '';
@@ -204,6 +233,79 @@ Only return the JSON, no explanation.`
   return false;
 }
 
+async function checkDeployment() {
+  console.log('  Checking Vercel deployment status...');
+
+  const status = await checkVercelStatus();
+  if (!status) {
+    console.log('  Vercel status unavailable (no token or API error)');
+    return null;
+  }
+
+  const stateName = status.readyState || status.state;
+  console.log(`  Vercel: ${stateName}`);
+
+  if (status.error) {
+    console.log(`  Vercel error: ${status.error}`);
+    return { failed: ['vercel'], error: status.error, url: status.url };
+  }
+
+  if (stateName === 'READY' || stateName === 'BUILDING') {
+    console.log(`  Deployment OK: ${status.url}`);
+    return null;
+  }
+
+  return { failed: ['vercel'], error: `Deployment state: ${stateName}`, url: status.url };
+}
+
+async function fixVercelError(deploymentError, url) {
+  console.log('\n  Deployment failed. Asking AI to fix...\n');
+
+  const fixResponse = await client.messages.create({
+    model: "MiniMax-M2.7",
+    max_tokens: 4096,
+    messages: [{
+      role: "user",
+      content: `The Vercel deployment failed.
+
+Deployment URL: ${url}
+Error: ${deploymentError}
+
+This is a Next.js project. Fix the issue that caused the deployment to fail.
+
+Return a JSON array of file changes:
+[
+  {
+    "path": "file path",
+    "action": "edit",
+    "content": "corrected full file content"
+  }
+]
+
+Only return the JSON, no explanation.`
+    }]
+  });
+
+  const text = fixResponse.content.find(b => b.type === 'text')?.text ?? fixResponse.content[0]?.text ?? '';
+  let jsonStr = text.trim().replace(/^```json\n?/, '').replace(/\n?```$/, '');
+
+  try {
+    const fixes = JSON.parse(jsonStr);
+    if (Array.isArray(fixes)) {
+      for (const f of fixes) {
+        if (f.path && f.content) {
+          fs.writeFileSync(f.path, f.content);
+          console.log(`  Fixed: ${f.path}`);
+        }
+      }
+      return true;
+    }
+  } catch (e) {
+    console.log(`  Could not parse fix response: ${e.message}`);
+  }
+  return false;
+}
+
 async function main() {
   console.log('\n=== Refactor Agent ===\n');
 
@@ -252,6 +354,19 @@ async function main() {
         const nextErrorLog = captureVerificationErrors();
         if (!nextErrorLog) break;
         await runVerificationAndFix(fix, nextErrorLog);
+      }
+    }
+
+    if (process.env.VERCEL_TOKEN) {
+      const deployResult = await checkDeployment();
+      if (deployResult?.failed) {
+        const fixed = await fixVercelError(deployResult.error, deployResult.url);
+        if (fixed) {
+          console.log('  Re-committing and re-deploying...');
+          execSync('git add -A', { stdio: 'pipe' });
+          const newMsg = await generateCommitMessage('.', 'batch');
+          execSync(`git commit -m "${newMsg}"`, { stdio: 'pipe' });
+        }
       }
     }
   }
