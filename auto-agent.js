@@ -92,6 +92,43 @@ function applyChange(action, filePath, content) {
   return true;
 }
 
+async function generateCommitMessage(filePath, action) {
+  try {
+    const diff = execSync(`git diff --staged "${filePath}" 2>/dev/null || git diff "${filePath}" 2>/dev/null || echo ""`, {
+      encoding: 'utf-8',
+      maxBuffer: 100 * 1024
+    });
+
+    const stats = execSync(`git diff --stat --stat-width=200 "${filePath}" 2>/dev/null || echo ""`, {
+      encoding: 'utf-8',
+      maxBuffer: 10 * 1024
+    });
+
+    const response = await client.messages.create({
+      model: "MiniMax-M2.7",
+      max_tokens: 256,
+      messages: [{
+        role: "user",
+        content: `Generate a short, concise git commit message (under 72 chars) for this change.
+
+File: ${filePath}
+Action: ${action}
+Diff stats: ${stats.trim()}
+
+Diff:
+${diff.slice(0, 2000)}
+
+Respond with ONLY the commit message, no quotes, no explanation.`
+      }]
+    });
+
+    const text = response.content.find(b => b.type === 'text')?.text ?? response.content[0]?.text ?? '';
+    return text.trim().split('\n')[0].replace(/^["']|["']$/g, '');
+  } catch (e) {
+    return 'chore: update';
+  }
+}
+
 async function main() {
   console.log('\n=== Refactor Agent ===\n');
 
@@ -117,16 +154,18 @@ async function main() {
   console.log(`Found ${fixes.length} change(s):\n`);
 
   for (const fix of fixes) {
-    console.log(`- ${fix.commit || fix.path}`);
+    if (!applyChange(fix.action, fix.path, fix.content)) continue;
 
-    if (applyChange(fix.action, fix.path, fix.content)) {
-      try {
-        execSync(`git add "${fix.path}"`, { stdio: 'pipe' });
-        execSync(`git commit -m "${fix.commit || 'chore: update'}"`, { stdio: 'pipe' });
-        console.log(`  Committed`);
-      } catch (e) {
-        console.log(`  Commit failed: ${e.message}`);
-      }
+    console.log(`- ${fix.path}`);
+
+    try {
+      execSync(`git add "${fix.path}"`, { stdio: 'pipe' });
+
+      const commitMsg = await generateCommitMessage(fix.path, fix.action);
+      execSync(`git commit -m "${commitMsg}"`, { stdio: 'pipe' });
+      console.log(`  Committed: ${commitMsg}`);
+    } catch (e) {
+      console.log(`  Commit failed: ${e.message}`);
     }
   }
 
