@@ -36,7 +36,24 @@
       "Bash(git checkout *)",
       "Bash(node --check /dev/stdin)",
       "Bash(curl -sL \"https://raw.githubusercontent.com/aphsx/Card-profile/763005b/auto-agent.js\")",
-      "Bash(vercel --version)"
+      "Bash(vercel --version)",
+      "Bash(git -C /Users/aphsx/Documents/GitHub/Card-profile log --oneline -10 -- auto-agent.js)",
+      "Bash(git -C /Users/aphsx/Documents/GitHub/Card-profile log --all --oneline -- auto-agent.js)",
+      "Bash(git -C /Users/aphsx/Documents/GitHub/Card-profile show c00e0d3:auto-agent.js)",
+      "Bash(git -C /Users/aphsx/Documents/GitHub/Card-profile status)",
+      "Bash(git -C /Users/aphsx/Documents/GitHub/Card-profile add app/page.tsx package-lock.json yarn.lock)",
+      "Bash(git -C /Users/aphsx/Documents/GitHub/Card-profile diff --cached --name-only)",
+      "Bash(git -C /Users/aphsx/Documents/GitHub/Card-profile log --oneline -3)",
+      "Bash(git -C /Users/aphsx/Documents/GitHub/Card-profile commit -m ' *)",
+      "Bash(git -C /Users/aphsx/Documents/GitHub/Card-profile push origin main)",
+      "Bash(git -C /Users/aphsx/Documents/GitHub/Card-profile pull origin main --no-edit)",
+      "Bash(git -C /Users/aphsx/Documents/GitHub/Card-profile fetch origin)",
+      "Bash(git -C /Users/aphsx/Documents/GitHub/Card-profile reset --hard origin/main)",
+      "Bash(git -C /Users/aphsx/Documents/GitHub/Card-profile pull origin main)",
+      "Bash(git -C /Users/aphsx/Documents/GitHub/Card-profile log --oneline -5)",
+      "Bash(yarn add *)",
+      "Bash(node /Users/aphsx/Documents/GitHub/Card-profile/auto-agent.js)",
+      "Bash(git -C /Users/aphsx/Documents/GitHub/Card-profile diff --staged tsconfig.json)"
     ]
   }
 }

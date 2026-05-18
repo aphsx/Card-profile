@@ -82,6 +82,7 @@ Make at least ONE meaningful commit today. Find the most important thing to fix.
 
 function applyChange(action, filePath, content) {
   if (!action || action === 'noop' || action === 'delete') return false;
+  if (!content) return false;
 
   const dir = path.dirname(filePath);
   if (dir && dir !== '.' && dir !== '..') {
@@ -313,8 +314,13 @@ async function main() {
 
   let fixes;
   try {
-    // Strip markdown code blocks if present
+    // Strip any non-JSON prefix (like AI's introductory text)
     let jsonStr = response.trim();
+    // Find the first '[' or '{' to start JSON parsing
+    const jsonStart = jsonStr.search(/[\[{]/);
+    if (jsonStart > 0) {
+      jsonStr = jsonStr.slice(jsonStart);
+    }
     jsonStr = jsonStr.replace(/^```json\n?/, '').replace(/\n?```$/, '');
     fixes = JSON.parse(jsonStr);
   } catch (e) {
