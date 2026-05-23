@@ -1,37 +1,40 @@
-# My App
+# Site
 
-A Next.js application with TypeScript and Tailwind CSS.
+A modern Next.js site with TypeScript, Tailwind CSS, and dark mode support.
+
+## Tech Stack
+
+- **Framework**: Next.js 15 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS + PostCSS
+- **Linting**: ESLint 9
 
 ## Getting Started
 
 ```bash
-# Install dependencies
 npm install
-
-# Run development server
 npm run dev
-
-# Build for production
-npm run build
-
-# Start production server
-npm start
-
-# Lint code
-npm run lint
 ```
+
+## Features
+
+- Dark/Light theme toggle
+- Language toggle with internationalization hooks
+- Responsive layout with Tailwind
+- Auto-commit via GitHub Actions on merge to main
 
 ## Project Structure
 
-- `app/` - Next.js App Router pages and layouts
-- `components/` - Reusable React components
-- `hooks/` - Custom React hooks
-- `public/` - Static assets
+```
+app/           - Next.js App Router pages and layouts
+components/    - Reusable UI components
+hooks/         - Custom React hooks
+public/        - Static assets
+```
 
-## Tech Stack
+## Scripts
 
-- Next.js 15
-- React 19
-- TypeScript
-- Tailwind CSS 4
-- ESLint
+- `npm run dev`     - Start development server
+- `npm run build`   - Build for production
+- `npm run lint`    - Run ESLint
+- `npm run lint:fix` - Fix ESLint issues automatically
