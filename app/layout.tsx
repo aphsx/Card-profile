@@ -1,28 +1,21 @@
-import type { Metadata, Viewport } from "next";
-import { LanguageProvider } from "@/hooks/use-language";
-import "./globals.css";
+import type { Metadata } from 'next';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "My App",
-  description: "A Next.js application",
-};
-
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
+  title: 'CSI Website',
+  description: 'Computer Science Institute - Your gateway to technology education',
+  keywords: ['computer science', 'technology', 'education', 'CSI'],
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
-      <body className="antialiased">
-        <LanguageProvider>
-          {children}
-        </LanguageProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 antialiased">
+        {children}
       </body>
     </html>
   );
