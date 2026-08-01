@@ -21,7 +21,6 @@ npm run dev
 - Dark/Light theme toggle
 - Language toggle with internationalization hooks
 - Responsive layout with Tailwind
-- Auto-commit via GitHub Actions on merge to main
 
 ## Project Structure
 
