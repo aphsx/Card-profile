@@ -1,7 +1,6 @@
 {
   "permissions": {
     "allow": [
-      "Bash(rm:*)",
       "Bash(npm run build:*)",
       "Bash(npm install)",
       "Bash(npm audit *)",
@@ -25,7 +24,6 @@
       "Bash(git -C /Users/aphsx/Documents/GitHub/Card-profile push origin main)",
       "Bash(git -C /Users/aphsx/Documents/GitHub/Card-profile pull origin main --no-edit)",
       "Bash(git -C /Users/aphsx/Documents/GitHub/Card-profile fetch origin)",
-      "Bash(git -C /Users/aphsx/Documents/GitHub/Card-profile reset --hard origin/main)",
       "Bash(git -C /Users/aphsx/Documents/GitHub/Card-profile pull origin main)",
       "Bash(git -C /Users/aphsx/Documents/GitHub/Card-profile log --oneline -5)",
       "Bash(yarn add *)",
