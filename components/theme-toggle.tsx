@@ -8,6 +8,7 @@ export function ThemeToggle() {
 
   useEffect(() => {
     // Only after mount, read the actual dark mode state
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- SSR-safe mount guard, not derived state
     setMounted(true);
     if (typeof document !== "undefined") {
       // Check localStorage first, then cookies, then DOM class
